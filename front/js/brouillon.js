@@ -21,6 +21,48 @@ if(userProduct[x].name === userProduct[x].name > 1 ){
   }
 cart__item inner html = cartUser
 
+
+// quand la quantité est = 0 retirer du panier
+function removeNullQuantity(){
+  for(let q=0; q<userProduct.length; q++){    
+    if(userProduct[q].quantity === '0'){
+      userProduct.splice(q,1)
+            console.log(userProduct)
+            localStorage.setItem("product", JSON.stringify(userProduct))
+            updateCart()
+    }
+  }
+}
+removeNullQuantity()
+
+ ..
+
+            console.log(Number(productPrice[index].lastElementChild.innerHTML) + Number(productPrice[index++].lastElementChild.innerHTML))
+
+ function getProductsPrice(){
+  let userProductId = userProduct[i]._id
+  fetch('http://localhost:3000/api/products/' + userProduct[i]._id)
+    .then(function(response){
+        return response.json()
+    }).then(function (data) {
+      console.log(data)
+      for(let p in cart__price){
+      }
+      console.log(data[i].price)
+      cart__price.innerHTML = data.price
+    })
+    
+}
+
+forEach(function(item, index, array){
+  item.addEventListener('change', (valueChange) => {
+    let productQuantityValue = item.value
+    productQuantityValue = valueChange.target.value
+    console.log(productQuantityValue)
+    console.log(userProduct[1].quantity)
+  })
+})
+
               userProduct[x].quantity + userProduct[y].quantity
               userProduct.splice(y,1)
   //suppression des duplique

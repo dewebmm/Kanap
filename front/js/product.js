@@ -12,7 +12,7 @@ function colorOptionTemplate(color) {
             return `<option value="${color}">${color}</option>`
         }
 //recuperation du produit a partir de l'id dans l'api et les afficher
-async function getProduct(productId) {
+async function getProduct() {
     const catchProduct = await fetch(PRODUCTS_URL + getProductId('id'))
     .then((catchProducts) => catchProducts.json())
     .then(function (data) {
@@ -54,14 +54,12 @@ const addProductToCart = function (name, color, quantity) {
         _id:getProductId(),
         color: productColors.options[productColors.selectedIndex].value,
         name: document.getElementById('title').textContent,
-        price: document.getElementById('price').textContent,
         quantity: quantityValue,
         imageUrl: img.item(5).src,
         altTxt: img.item(5).alt,
     }
     return productCart;
 }
-addProductToCart()
 
 //redirection vers le panier
 const addToCart = document.getElementById("addToCart")
