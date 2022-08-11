@@ -63,49 +63,10 @@ function showToCart(){
   }if(i === userProduct.length){
     //injection dans l'html
     cart__items.innerHTML = userCart
-      // chaque element present dans l'html
-      Array.from(cart__item).forEach((element, index) => {
-        //fetch les données de l'id recuperer sur l'element
-        fetch('http://localhost:3000/api/products/' + element.dataset.id)
-        //conversion en json
-        .then(function(response){
-            return response.json()
-        }).then(function (data) {
-          //si l'id de l'element est === l'id dans l'api 
-          if(element.dataset.id === data._id){
-            //alors injecter le prix de l'api dans l'html de l'element
-            productPrice[index].lastElementChild.innerHTML = data.price
-          }
-        })
-      });
     }
   }
 }
 showToCart()
-let productPrice = document.getElementsByClassName("cart__item__content__description")
-productPrice = Array.from(productPrice)
-console.log(productPrice)
-
-let totalQuantity = document.getElementById('totalQuantity')
-let totalPrice = document.getElementById('totalPrice')
-totalQuantity.innerHTML = '21'
-totalPrice.innerHTML = ''
-console.log(totalQuantity)
-console.log(totalPrice)
-
-function addition(elementNumber){
-  elementNumber = Number(elementNumber)
-  let totalPrice = 0;
-  console.log(elementNumber)
-  for(let t in elementNumber){
-    totalPrice += elementNumber
-    console.log(totalPrice)
-  }
-}
-/**<div class="cart__price">
-              <p>Total (<span id="totalQuantity"><!-- 2 --></span> articles) : <span id="totalPrice"><!-- 84,00 --></span> €</p>
-            </div> */
-
 
 // ******************modification de la quantité dynamique avec le local storage
 //cible l element contenant la quantité
@@ -129,6 +90,52 @@ for(let q in Array.from(productQuantity)){
     }      
 })
 }
+//*****************************************insertion des prix depuis l'api****************************************** */
+
+let productPrice = document.getElementsByClassName("cart__item__content__description")
+productPrice = Array.from(productPrice)
+function fetchPrice(){
+      // chaque element present dans l'html
+        Array.from(cart__item).forEach((element, index) => {
+        //fetch les données de l'id recuperer sur l'element
+        fetch('http://localhost:3000/api/products/' + element.dataset.id)
+        //conversion en json
+        .then(function(response){
+            return response.json()
+        }).then(function (data) {
+          //si l'id de l'element est === l'id dans l'api 
+          if(element.dataset.id === data._id){
+            //alors injecter le prix de l'api dans l'html de l'element
+            productPrice[index].lastElementChild.innerHTML = data.price
+            let priceQuantity = Number(productPrice[index].lastElementChild.innerHTML) * userProduct[index].quantity
+            console.log(priceQuantity)
+            //console.log(Number(productPrice[index].lastElementChild.innerHTML))
+          }
+        })
+      })}
+
+fetchPrice()
+let totalQuantity = document.getElementById('totalQuantity')
+let totalPrice = document.getElementById('totalPrice')
+totalQuantity.innerHTML = '21'
+totalPrice.innerHTML = ''
+console.log(totalQuantity)
+console.log(totalPrice)
+
+function addition(elementNumber){
+  elementNumber = Number(elementNumber)
+  let totalPrice = 0;
+  console.log(elementNumber)
+  for(let t in elementNumber){
+    totalPrice += elementNumber
+    console.log(totalPrice)
+  }
+}
+/**<div class="cart__price">
+              <p>Total (<span id="totalQuantity"><!-- 2 --></span> articles) : <span id="totalPrice"><!-- 84,00 --></span> €</p>
+            </div> */
+
+
 
 /****************************** Bouton supprimer article */
 //selectionner l'element qui declenchera la suppression
@@ -161,13 +168,13 @@ const formulaire = {
 //Control du formulaire 
 //variable d'une fonction pour verifier les données saisie pour caractere uniquement
 const controlFormNameCity = function(value){
-  return /^[A-Za-z]{3,20}$/.productPrice(value)
+  return /^[A-Za-z]{3,20}$/
 }
 const controlAddress = function(value){
-  return /^[0-9a-zA-Z]$/.productPrice(value)
+  return /^[0-9a-zA-Z]$/
 }
 const controlEmail = function(value){
-  return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.productPrice(value)
+  return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/
 }
 
 
